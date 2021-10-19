@@ -1,3 +1,5 @@
+package service;
+
 public class Mathematic implements Calculator {
 
     public double sum(double a, double b) {

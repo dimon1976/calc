@@ -1,7 +1,12 @@
+import service.Mathematic;
+import service.Menu;
+import storage.InMemoryStorage;
+import user.User;
+
 public class Main {
     public static void main(String[] args) {
 
-        Storage users = new Storage();
+        InMemoryStorage users = new InMemoryStorage();
         int i = 0;
 
         User user1 = new User("Bob", "login", "pass");

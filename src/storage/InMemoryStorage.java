@@ -1,4 +1,8 @@
-public class Storage {
+package storage;
+
+import user.User;
+
+public class InMemoryStorage {
     private static User[] data = new User[15];
 
     public void fillingTheArray(int count, User user) {
@@ -32,17 +36,17 @@ public class Storage {
 
     public static boolean signIn(String name, String login, String pass) {
         boolean c = false;
-        for (int i = 0; i < data.length; i++) {
-            if (data[i] == null) {
+        for (User datum : data) {
+            if (datum == null) {
                 return c;
-            } else if (data[i] != null) {
-                c = data[i].getLogin().equals(login) & data[i].getPass().equals(pass);
+            } else {
+                c = datum.getLogin().equals(login) & datum.getPass().equals(pass);
                 if (c) {
                     return true;
                 }
             }
         }
-        return c; // конец блока авторизации
+        return false; // конец блока авторизации
     }
 
 
@@ -51,7 +55,7 @@ public class Storage {
     }
 
     public static void setData(User[] data) {
-        Storage.data = data;
+        InMemoryStorage.data = data;
     }
 
     @Override
