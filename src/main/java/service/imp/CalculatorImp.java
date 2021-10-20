@@ -1,6 +1,6 @@
-package service;
+package service.imp;
 
-public interface Calculator {
+public interface CalculatorImp {
     double sum(double a, double b);
     double delete(double a, double b);
     double multi(double a, double b);

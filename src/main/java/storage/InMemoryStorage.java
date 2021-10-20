@@ -7,6 +7,11 @@ import java.util.List;
 
 public class InMemoryStorage {
     private final static List<User> userList = new ArrayList<>();
+    private final static List<Double> resultList = new ArrayList<>();
+
+    public void addResult(Double num){
+        resultList.add(num);
+    }
 
     public boolean register(User user) {
         if (verificationUserLogin(user)) {

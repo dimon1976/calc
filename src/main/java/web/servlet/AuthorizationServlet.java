@@ -27,6 +27,7 @@ public class AuthorizationServlet extends HttpServlet {
         if (user != null) {
             if (user.getPass().equals(password)) {
                 req.getSession().setAttribute("user", user);
+                resp.getWriter().println("You are logged in");
             } else {
                 resp.getWriter().println("Wrong password");
             }
