@@ -1,6 +1,7 @@
 package web.servlet;
 
 import storage.InMemoryStorage;
+import user.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,5 +19,19 @@ public class AuthorizationServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
+        User user = storage.findByUsername(username);
+        verificationPassword(req, resp, password, user);
+    }
+
+    private void verificationPassword(HttpServletRequest req, HttpServletResponse resp, String password, User user) throws IOException {
+        if (user != null) {
+            if (user.getPass().equals(password)) {
+                req.getSession().setAttribute("user", user);
+            } else {
+                resp.getWriter().println("Wrong password");
+            }
+        } else {
+            resp.getWriter().println("User not found");
+        }
     }
 }

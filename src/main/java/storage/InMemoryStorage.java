@@ -8,25 +8,13 @@ import java.util.List;
 public class InMemoryStorage {
     private final static List<User> userList = new ArrayList<>();
 
-    public void register(User user) {
+    public boolean register(User user) {
         if (verificationUserLogin(user)) {
             User newUser = new User(user.getName(), user.getLogin(), user.getPass());
             userList.add(newUser);
+            return true;
         }
-    }
-
-
-    public static boolean signIn(String name, String login, String pass) {
-        for (User datum : userList) {
-            if (datum == null) {
-                return false;
-            } else {
-                if (datum.getLogin().equals(login) & datum.getPass().equals(pass)) {
-                    return true;
-                }
-            }
-        }
-        return false; // конец блока авторизации
+        return false;
     }
 
     public boolean verificationUserLogin(User user) {
@@ -39,11 +27,14 @@ public class InMemoryStorage {
         return true;
     }
 
-
-    public void print() {
+    public User findByUsername(String name) {
         for (User us : userList) {
-            System.out.println(us.getLogin());
+            if (us.getName().equals(name)) {
+                System.out.println("This UserName exists");
+                return us;
+            }
         }
+        return null;
     }
 }
 
