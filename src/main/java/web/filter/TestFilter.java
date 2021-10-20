@@ -1,6 +1,10 @@
 package web.filter;
 
 
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpFilter;
 
-public class TestFilter {
+
+@WebFilter
+public class TestFilter extends HttpFilter {
 }

@@ -1,6 +1,7 @@
 package service;
 
 import storage.InMemoryStorage;
+import user.User;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -41,7 +42,7 @@ public class Menu {
                     String login = r.nextLine();
                     System.out.println("Введите пароль:");
                     String pass = r.nextLine();
-                    check = InMemoryStorage.register(name, login, pass);  //проверка на совпадение в массиве
+//                    check = InMemoryStorage.register(new User(name, login, pass));  //проверка на совпадение в массиве
                     if (!check) {
                         System.out.println("Регистрация прошла успешно.\nЗапускаем калькулятор.");
                         launch(calculator);

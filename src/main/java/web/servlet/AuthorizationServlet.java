@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-@WebServlet("authorize")
+@WebServlet("/authorize")
 public class AuthorizationServlet extends HttpServlet {
     private final InMemoryStorage storage = new InMemoryStorage();
 

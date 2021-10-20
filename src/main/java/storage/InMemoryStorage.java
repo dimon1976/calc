@@ -6,60 +6,44 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InMemoryStorage {
-    private final static List<User> data = new ArrayList<>();
+    private final static List<User> userList = new ArrayList<>();
 
-//    public void fillingTheArray(int count, User user) {
-//        data[count] = user;
-//    }
-
-    public static boolean register(String name, String login, String pass) {
-        boolean b = false;
-        for (User us : data) {
-            if (us == null) {
-                User user = new User(name, login, pass);
-                data.add(user);
-                return b;
-            } else {
-                b = us.getLogin().equals(login);
-                if (b) {
-                    if (us.getLogin().equals(login)) {
-                        System.out.println("РўР°РєРѕР№ Р»РѕРіРёРЅ СЃСѓС‰РµСЃС‚РІСѓРµС‚");
-                        return b;
-                    }
-                }
-            }
+    public void register(User user) {
+        if (verificationUserLogin(user)) {
+            User newUser = new User(user.getName(), user.getLogin(), user.getPass());
+            userList.add(newUser);
         }
-        return b;
     }
 
 
     public static boolean signIn(String name, String login, String pass) {
-        boolean c = false;
-        for (User datum : data) {
+        for (User datum : userList) {
             if (datum == null) {
-                return c;
+                return false;
             } else {
-                c = datum.getLogin().equals(login) & datum.getPass().equals(pass);
-                if (c) {
+                if (datum.getLogin().equals(login) & datum.getPass().equals(pass)) {
                     return true;
                 }
             }
         }
-        return false; // РєРѕРЅРµС† Р±Р»РѕРєР° Р°РІС‚РѕСЂРёР·Р°С†РёРё
+        return false; // конец блока авторизации
+    }
+
+    public boolean verificationUserLogin(User user) {
+        for (User us : userList) {
+            if (us.getLogin().equals(user.getLogin())) {
+                System.out.println("This login exists");
+                return false;
+            }
+        }
+        return true;
     }
 
 
-//    public static User getData() {
-//        return data;
-//    }
-//
-//    public static void setData(User[] data) {
-//        InMemoryStorage.data = data;
-//    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
+    public void print() {
+        for (User us : userList) {
+            System.out.println(us.getLogin());
+        }
     }
 }
 
