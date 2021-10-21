@@ -1,18 +1,28 @@
 package service;
 
+import storage.InMemoryStorage;
+
 public class CalculatorService {
 
     public static double start(Double num1, Double num2, String op) {
-        Mathematics mathematic = new Mathematics();
+        Mathematics mathematics = new Mathematics();
         switch (op) {
             case "sum":
-                return mathematic.sum(num1, num2);
+                double sum = mathematics.sum(num1, num2);
+                InMemoryStorage.addResult(sum);
+                return sum;
             case "sub":
-                return mathematic.sub(num1, num2);
-            case "delete":
-                return mathematic.delete(num1, num2);
+                double sub = mathematics.sub (num1, num2);
+                InMemoryStorage.addResult(sub);
+                return sub;
+            case "div":
+                double div = mathematics.delete(num1, num2);
+                InMemoryStorage.addResult(div);
+                return div;
             case "multi":
-                return mathematic.multi(num1, num2);
+                double multi = mathematics.multi(num1, num2);
+                InMemoryStorage.addResult(multi);
+                return multi;
         }
         return 0;
     }
