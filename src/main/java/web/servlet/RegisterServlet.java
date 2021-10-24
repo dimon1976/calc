@@ -1,7 +1,7 @@
 package web.servlet;
 
-import storage.InMemoryStorage;
-import user.User;
+import entity.User;
+import service.imp.MemoryService;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,16 +13,16 @@ import java.io.IOException;
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
 
-    private final InMemoryStorage inMemoryStorage = new InMemoryStorage();
+    private final MemoryService memoryOperation = new MemoryService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String name = req.getParameter("name");
         String username = req.getParameter("username");
         String password = req.getParameter("password");
-        if(!inMemoryStorage.register(new User(name,username,password))){
+        if (!memoryOperation.register(new User(name, username, password))) {
             resp.getWriter().println("This login exists");
-        }else{
+        } else {
             resp.getWriter().println("Are you registered. Please log in.");
         }
     }

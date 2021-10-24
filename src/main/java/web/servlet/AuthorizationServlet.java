@@ -1,9 +1,8 @@
 package web.servlet;
 
-import storage.InMemoryStorage;
-import user.User;
+import service.imp.MemoryService;
+import entity.User;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,13 +12,13 @@ import java.io.IOException;
 
 @WebServlet("/authorize")
 public class AuthorizationServlet extends HttpServlet {
-    private final InMemoryStorage storage = new InMemoryStorage();
+    private final MemoryService storageService = new MemoryService();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
-        User user = storage.findByUsername(username);
+        User user = storageService.findByUsername(username);
         verificationPassword(req, resp, password, user);
     }
 

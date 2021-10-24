@@ -21,8 +21,8 @@ public class FilterNumber extends HttpFilter {
     }
 
     private void extracted(HttpServletRequest req, HttpServletResponse resp, FilterChain chain, String num1, String num2, String operation) throws IOException, ServletException {
-        if (checkString(num1)) {
-            if (checkString(num2)) {
+        if (isNumeric(num1)) {
+            if (isNumeric(num2)) {
                 if (checkString(operation)) {
                     chain.doFilter(req, resp);
                 } else {

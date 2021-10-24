@@ -13,6 +13,7 @@ import java.io.IOException;
 @WebFilter(servletNames = {"CalcServlet"})
 public class FilterUser extends HttpFilter {
 
+
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
         if (req.getSession().getAttribute("user") != null) {

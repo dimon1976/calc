@@ -1,9 +1,12 @@
-package user;
+package entity;
+
+import java.util.List;
 
 public class User {
     private String name;
     private String login;
     private String pass;
+    private List<Double> resultList;
 
     public User(String name, String login, String pass) {
         this.name = name;
@@ -20,5 +23,11 @@ public class User {
         return pass;
     }
 
+    public List<Double> getResultList() {
+        return resultList;
+    }
 
+    public void setResultList(List<Double> resultList) {
+        this.resultList = resultList;
+    }
 }
