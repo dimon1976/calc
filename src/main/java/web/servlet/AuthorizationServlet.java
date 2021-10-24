@@ -1,6 +1,6 @@
 package web.servlet;
 
-import service.imp.MemoryService;
+import service.imp.UserMemoryService;
 import entity.User;
 
 import javax.servlet.annotation.WebServlet;
@@ -12,7 +12,7 @@ import java.io.IOException;
 
 @WebServlet("/authorize")
 public class AuthorizationServlet extends HttpServlet {
-    private final MemoryService storageService = new MemoryService();
+    private final UserMemoryService storageService = new UserMemoryService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {

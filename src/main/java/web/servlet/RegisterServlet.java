@@ -1,7 +1,7 @@
 package web.servlet;
 
 import entity.User;
-import service.imp.MemoryService;
+import service.imp.UserMemoryService;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,7 +13,7 @@ import java.io.IOException;
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
 
-    private final MemoryService memoryOperation = new MemoryService();
+    private final UserMemoryService memoryOperation = new UserMemoryService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -25,5 +25,9 @@ public class RegisterServlet extends HttpServlet {
         } else {
             resp.getWriter().println("Are you registered. Please log in.");
         }
+    }
+
+    public UserMemoryService getMemoryOperation() {
+        return memoryOperation;
     }
 }

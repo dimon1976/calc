@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-@WebFilter(servletNames = {"CalcServlet"})
+@WebFilter(servletNames = {"CalcServlet","delete"})
 public class FilterUser extends HttpFilter {
 
 

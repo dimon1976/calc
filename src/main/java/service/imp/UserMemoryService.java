@@ -3,7 +3,9 @@ package service.imp;
 import entity.User;
 import storage.InMemoryStorage;
 
-public class MemoryService {
+import java.util.List;
+
+public class UserMemoryService {
 
     public boolean register(User user) {
         if (verificationUserLogin(user)) {
@@ -33,5 +35,17 @@ public class MemoryService {
             }
         }
         return null;
+    }
+
+    public void deleteUser(User user) {
+        List<User> userList = InMemoryStorage.getUserList();
+        if (userList != null && !userList.isEmpty()) {
+            for (User r : userList) {
+                if (user.getLogin().equals(r.getLogin())) {
+                    userList.remove(user);
+                    return;
+                }
+            }
+        }
     }
 }
