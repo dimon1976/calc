@@ -21,7 +21,7 @@ public class EditUserServlet extends HttpServlet {
         String password = req.getParameter("password");
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
-        registerServlet.getMemoryOperation().editUser(user, name, username, password);
+//        registerServlet.getMemoryOperation().editUser(user, name, username, password);
         resp.getWriter().println("User updated");
     }
 }

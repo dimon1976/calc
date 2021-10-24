@@ -2,6 +2,7 @@ package web.servlet;
 
 import entity.User;
 import service.imp.UserMemoryService;
+import storage.JdbcMemoryUserStorage;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,22 +13,26 @@ import java.io.IOException;
 
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
-
-    private final UserMemoryService memoryOperation = new UserMemoryService();
+    //    private final UserMemoryService memoryOperation = new UserMemoryService();
+    private final JdbcMemoryUserStorage memoryOperation = new JdbcMemoryUserStorage();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String name = req.getParameter("name");
         String username = req.getParameter("username");
         String password = req.getParameter("password");
-        if (!memoryOperation.register(new User(name, username, password))) {
+        if (!memoryOperation.userRegister(new User(name, username, password))) {
             resp.getWriter().println("This login exists");
         } else {
             resp.getWriter().println("Are you registered. Please log in.");
         }
     }
 
-    public UserMemoryService getMemoryOperation() {
+//    public UserMemoryService getMemoryOperation() {
+//        return memoryOperation;
+//    }
+
+    public JdbcMemoryUserStorage getMemoryOperation() {
         return memoryOperation;
     }
 }

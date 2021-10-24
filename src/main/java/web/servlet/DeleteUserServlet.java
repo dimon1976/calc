@@ -19,7 +19,7 @@ public class DeleteUserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
-        registerServlet.getMemoryOperation().deleteUser(user);
+//        registerServlet.getMemoryOperation().deleteUser(user);
         resp.getWriter().println("User deleted");
         req.getSession().invalidate();
     }
