@@ -1,10 +1,14 @@
-public class Mathematic implements Calculator {
+package service.imp;
+
+import service.CalculatorInterface;
+
+public class MathService implements CalculatorInterface {
 
     public double sum(double a, double b) {
         return a + b;
     }
 
-    public double delete(double a, double b) {
+    public double division(double a, double b) {
         return a / b;
     }
 
