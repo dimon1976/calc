@@ -48,4 +48,20 @@ public class UserMemoryService {
             }
         }
     }
+
+    public void editUser(User user, String name, String username, String password) {
+        List<User> userList = InMemoryStorage.getUserList();
+        if (userList != null && !userList.isEmpty()) {
+            for (User r : userList) {
+                if (user.getLogin().equals(r.getLogin())) {
+                    r.setName(name);
+                    r.setLogin(username);
+                    r.setPass(password);
+                    return;
+                }
+            }
+        }
+
+
+    }
 }

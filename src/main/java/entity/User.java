@@ -23,6 +23,18 @@ public class User {
         return pass;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
+    }
+
     public List<Double> getResultList() {
         return resultList;
     }

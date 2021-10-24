@@ -13,15 +13,15 @@ public class CalcService {
                 double sum = mathematics.sum(num1, num2);
                 checkingHistorySheet(user, sum);
                 return sum;
-            case "sub":
+            case "subtrack":
                 double sub = mathematics.sub(num1, num2);
                 checkingHistorySheet(user, sub);
                 return sub;
             case "div":
-                double div = mathematics.delete(num1, num2);
+                double div = mathematics.division(num1, num2);
                 checkingHistorySheet(user, div);
                 return div;
-            case "multi":
+            case "multiply":
                 double multi = mathematics.multi(num1, num2);
                 checkingHistorySheet(user, multi);
                 return multi;

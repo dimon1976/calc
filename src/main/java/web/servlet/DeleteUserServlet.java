@@ -21,5 +21,6 @@ public class DeleteUserServlet extends HttpServlet {
         User user = (User) session.getAttribute("user");
         registerServlet.getMemoryOperation().deleteUser(user);
         resp.getWriter().println("User deleted");
+        req.getSession().invalidate();
     }
 }

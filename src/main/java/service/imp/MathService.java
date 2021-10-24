@@ -8,7 +8,7 @@ public class MathService implements CalculatorInterface {
         return a + b;
     }
 
-    public double delete(double a, double b) {
+    public double division(double a, double b) {
         return a / b;
     }
 
