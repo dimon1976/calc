@@ -1,7 +1,7 @@
 package web.servlet;
 
 import entity.User;
-import service.imp.CalcService;
+import service.CalcService;
 
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;

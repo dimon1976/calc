@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class InMemoryStorage {
+public class MemoryUserStorage {
     private final static List<User> userList = new ArrayList<>();
 
     public static void addUserList(User user) {

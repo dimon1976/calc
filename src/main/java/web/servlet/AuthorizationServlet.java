@@ -1,8 +1,9 @@
 package web.servlet;
 
-import service.imp.UserMemoryService;
+import service.UserService;
 import entity.User;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -10,28 +11,40 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-@WebServlet("/authorize")
+@WebServlet("/authorization")
 public class AuthorizationServlet extends HttpServlet {
-    private final UserMemoryService storageService = new UserMemoryService();
+    private final UserService storageService = new UserService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        try {
+            getServletContext().getRequestDispatcher("/pages/authorization.jsp").forward(req, resp);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
-        User user = storageService.findByUsername(username);
+        User user = storageService.findByUsernameJdbc(username);
         verificationPassword(req, resp, password, user);
     }
 
-    private void verificationPassword(HttpServletRequest req, HttpServletResponse resp, String password, User user) throws IOException {
+    private void verificationPassword(HttpServletRequest req, HttpServletResponse resp, String password, User user) throws IOException, ServletException {
         if (user != null) {
             if (user.getPass().equals(password)) {
                 req.getSession().setAttribute("user", user);
-                resp.getWriter().println("You are logged in");
+                resp.sendRedirect("/");
+                return;
             } else {
-                resp.getWriter().println("Wrong password");
+                req.setAttribute("message", "Wrong password");
             }
         } else {
-            resp.getWriter().println("User not found");
+            req.setAttribute("message", "User not found");
         }
+        getServletContext().getRequestDispatcher("/pages/authorization.jsp").forward(req, resp);
     }
 }

@@ -1,24 +1,34 @@
-package service.imp;
+package service;
 
 import entity.User;
-import storage.InMemoryStorage;
+import storage.JdbcUserStorage;
+import storage.MemoryUserStorage;
 
 import java.util.List;
 
-public class UserMemoryService {
+public class UserService {
+    JdbcUserStorage jdbcStorage = new JdbcUserStorage();
 
     public boolean register(User user) {
         if (verificationUserLogin(user)) {
             User newUser = new User(user.getName(), user.getLogin(), user.getPass());
-            InMemoryStorage.addUserList(newUser);
+            MemoryUserStorage.addUserList(newUser);
             return true;
         }
         return false;
     }
 
+    public boolean registerUserJdbc(User user) {
+        if (!jdbcStorage.verificationLogin(user.getLogin())) {
+            jdbcStorage.save(user);
+            return true;
+        }
+        return false;
+    } //Done
+
     public boolean verificationUserLogin(User user) {
-        if (!InMemoryStorage.getUserList().isEmpty()) {
-            for (User us : InMemoryStorage.getUserList()) {
+        if (!MemoryUserStorage.getUserList().isEmpty()) {
+            for (User us : MemoryUserStorage.getUserList()) {
                 if (us.getLogin().equals(user.getLogin())) {
                     return false;
                 }
@@ -28,8 +38,9 @@ public class UserMemoryService {
         return true;
     }
 
+
     public User findByUsername(String name) {
-        for (User us : InMemoryStorage.getUserList()) {
+        for (User us : MemoryUserStorage.getUserList()) {
             if (us.getName().equals(name)) {
                 return us;
             }
@@ -37,8 +48,15 @@ public class UserMemoryService {
         return null;
     }
 
+    public User findByUsernameJdbc(String userName) {
+        if (jdbcStorage.verificationLogin(userName)) {
+            return jdbcStorage.returnUser(userName);
+        }
+        return null;
+    }
+
     public void deleteUser(User user) {
-        List<User> userList = InMemoryStorage.getUserList();
+        List<User> userList = MemoryUserStorage.getUserList();
         if (userList != null && !userList.isEmpty()) {
             for (User r : userList) {
                 if (user.getLogin().equals(r.getLogin())) {
@@ -49,8 +67,12 @@ public class UserMemoryService {
         }
     }
 
+    public void deleteUserJdbc(User user) {
+
+    }
+
     public void editUser(User user, String name, String username, String password) {
-        List<User> userList = InMemoryStorage.getUserList();
+        List<User> userList = MemoryUserStorage.getUserList();
         if (userList != null && !userList.isEmpty()) {
             for (User r : userList) {
                 if (user.getLogin().equals(r.getLogin())) {
@@ -61,7 +83,9 @@ public class UserMemoryService {
                 }
             }
         }
+    }
 
+    public void editUserJdbc(User user, String name, String username, String password) {
 
     }
 }

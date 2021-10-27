@@ -1,8 +1,6 @@
-package service.imp;
+package service;
 
-import service.CalculatorInterface;
-
-public class MathService implements CalculatorInterface {
+public class MathService {
 
     public double sum(double a, double b) {
         return a + b;

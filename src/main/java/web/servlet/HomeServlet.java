@@ -8,11 +8,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-@WebServlet("/logout")
-public class LogoutServlet extends HttpServlet {
+@WebServlet(value = "/")
+public class HomeServlet extends HttpServlet {
+
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        req.getSession().invalidate();
-        resp.sendRedirect("/");
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        getServletContext().getRequestDispatcher("/pages/index.jsp").forward(req, resp);
     }
 }
