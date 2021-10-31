@@ -7,7 +7,7 @@ public class User {
     private String name;
     private String login;
     private String pass;
-    private List<Double> resultList;
+    private List<HistoryResult> list;
 
     public User(int id, String name, String login, String pass) {
         this.id = id;
@@ -22,6 +22,14 @@ public class User {
         this.pass = pass;
     }
 
+    public List<HistoryResult> getList() {
+        return list;
+    }
+
+    public void setList(List<HistoryResult> list) {
+        this.list = list;
+    }
+
     public int getId() {
         return id;
     }
@@ -29,9 +37,11 @@ public class User {
     public String getName() {
         return name;
     }
+
     public String getLogin() {
         return login;
     }
+
     public String getPass() {
         return pass;
     }

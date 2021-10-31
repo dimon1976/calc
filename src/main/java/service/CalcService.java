@@ -1,32 +1,32 @@
 package service;
 
 import entity.User;
-
-import java.util.ArrayList;
+import storage.JdbcHistoryCalculate;
 
 public class CalcService {
 
-    public double start(Double num1, Double num2, String op, User user) {
+    public Double start(Double num1, Double num2, String op, User user) {
         MathService mathematics = new MathService();
+        JdbcHistoryCalculate history = new JdbcHistoryCalculate();
         switch (op) {
             case "sum":
                 double sum = mathematics.sum(num1, num2);
-//                checkingHistorySheet(user, sum);
+                history.save(num1, num2, sum, user, "+");
                 return sum;
             case "subtrack":
                 double sub = mathematics.sub(num1, num2);
-//                checkingHistorySheet(user, sub);
+                history.save(num1, num2, sub, user, "-");
                 return sub;
             case "div":
                 double div = mathematics.division(num1, num2);
-//                checkingHistorySheet(user, div);
+                history.save(num1, num2, div, user, "/");
                 return div;
             case "multiply":
                 double multi = mathematics.multi(num1, num2);
-//                checkingHistorySheet(user, multi);
+                history.save(num1, num2, multi, user, "*");
                 return multi;
         }
-        return 0;
+        return null;
     }
 
 //    private static void checkingHistorySheet(User user, double multi) {

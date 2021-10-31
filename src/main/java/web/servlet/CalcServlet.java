@@ -8,9 +8,9 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet(name = "calc",value = "/calc")
+@WebServlet(name = "calc", value = "/calc")
 public class CalcServlet extends HttpServlet {
-
+    CalcService service = new CalcService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
@@ -37,7 +37,8 @@ public class CalcServlet extends HttpServlet {
         String operation = req.getParameter("operation");
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
-//        req.setAttribute("message", "Result: " + calcService.start(Double.parseDouble(num1), Double.parseDouble(num2), operation, user) + "\n");
-//        getServletContext().getRequestDispatcher("/pages/calc.jsp").forward(req, resp);
+        Double result = service.start(Double.parseDouble(num1), Double.parseDouble(num2), operation, user);
+        req.setAttribute("message", result);
+        getServletContext().getRequestDispatcher("/pages/calc.jsp").forward(req, resp);
     }
 }

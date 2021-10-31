@@ -35,7 +35,6 @@ public class JdbcUserStorage extends ConfigConnection implements StorageInterfac
         return false;
     }
 
-
     @Override
     public boolean verificationLogin(String name) {
         try {
