@@ -2,14 +2,14 @@ package entity;
 
 import java.util.Date;
 
-public class HistoryResult {
+public class History {
     private Double num1;
     private Double num2;
     private Double result;
     private String operation;
     private Date dt;
 
-    public HistoryResult(Double num1, Double num2, Double result, String operation, Date dt) {
+    public History(Double num1, Double num2, Double result, String operation, Date dt) {
         this.num1 = num1;
         this.num2 = num2;
         this.result = result;

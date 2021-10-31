@@ -1,5 +1,6 @@
 package web.servlet;
 
+import entity.History;
 import entity.User;
 import service.CalcService;
 
@@ -7,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.util.ArrayList;
 
 @WebServlet(name = "calc", value = "/calc")
 public class CalcServlet extends HttpServlet {
@@ -38,6 +40,8 @@ public class CalcServlet extends HttpServlet {
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
         Double result = service.start(Double.parseDouble(num1), Double.parseDouble(num2), operation, user);
+        ArrayList<History> results = service.select(user);
+        req.setAttribute("results",results);
         req.setAttribute("message", result);
         getServletContext().getRequestDispatcher("/pages/calc.jsp").forward(req, resp);
     }

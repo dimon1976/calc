@@ -1,13 +1,16 @@
 package service;
 
+import entity.History;
 import entity.User;
 import storage.JdbcHistoryCalculate;
 
+import java.util.ArrayList;
+
 public class CalcService {
+    JdbcHistoryCalculate history = new JdbcHistoryCalculate();
 
     public Double start(Double num1, Double num2, String op, User user) {
         MathService mathematics = new MathService();
-        JdbcHistoryCalculate history = new JdbcHistoryCalculate();
         switch (op) {
             case "sum":
                 double sum = mathematics.sum(num1, num2);
@@ -27,6 +30,10 @@ public class CalcService {
                 return multi;
         }
         return null;
+    }
+
+    public ArrayList<History> select(User user) {
+        return history.history(user);
     }
 
 //    private static void checkingHistorySheet(User user, double multi) {

@@ -7,7 +7,6 @@ public class User {
     private String name;
     private String login;
     private String pass;
-    private List<HistoryResult> list;
 
     public User(int id, String name, String login, String pass) {
         this.id = id;
@@ -20,14 +19,6 @@ public class User {
         this.name = name;
         this.login = login;
         this.pass = pass;
-    }
-
-    public List<HistoryResult> getList() {
-        return list;
-    }
-
-    public void setList(List<HistoryResult> list) {
-        this.list = list;
     }
 
     public int getId() {
@@ -48,14 +39,6 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public void setPass(String pass) {
-        this.pass = pass;
     }
 
 }

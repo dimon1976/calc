@@ -1,22 +1,20 @@
 package storage;
 
-import entity.HistoryResult;
+import entity.History;
 import entity.User;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class JdbcHistoryCalculate extends ConfigConnection {
     java.sql.Date date = new java.sql.Date(System.currentTimeMillis());
-    List<HistoryResult> history = new ArrayList<>();
 
     private final static String num1 = "num1";
     private final static String num2 = "num2";
     private final static String result = "result";
     private final static String dateTime = "dt";
-    private final static String operation = "operation";
+    private final static String operation = "op";
 
     public void save(double num1, double num2, double result, User user, String operation) {
         try {
@@ -36,10 +34,10 @@ public class JdbcHistoryCalculate extends ConfigConnection {
         }
     }
 
-    public List<HistoryResult> history(User user) {
+    public ArrayList<History> history(User user) {
         try {
             try (Connection connection = DriverManager.getConnection(getUrl(), getUsername(), getPassword())) {
-                List<HistoryResult> list = new ArrayList<>();
+                ArrayList<History> list = new ArrayList<>();
                 Statement statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery("SELECT * FROM history_result WHERE UId = " + user.getId());
                 while (resultSet.next()) {
@@ -48,9 +46,8 @@ public class JdbcHistoryCalculate extends ConfigConnection {
                     Double res = resultSet.getDouble(result);
                     String op = resultSet.getString(operation);
                     Date date1 = resultSet.getDate(dateTime);
-                    HistoryResult historyResult = new HistoryResult(number1, number2, res, op, date1);
+                    History historyResult = new History(number1, number2, res, op, date1);
                     list.add(historyResult);
-                    user.setList(list);
                 }
                 return list;
             }

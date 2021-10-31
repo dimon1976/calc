@@ -35,10 +35,9 @@
     </fieldset>
     <fieldset>
         <legend>История операций</legend>
-<%--        <c:forEach var="" items="">--%>
-<%--&lt;%&ndash;            <p>${}</p>&ndash;%&gt;--%>
-<%--        </c:forEach>--%>
-
+        <c:forEach var="results" items="${requestScope.results}">
+            <p>${results.num1} ${results.operation} ${results.num2} = ${results.result}</p>
+        </c:forEach>
     </fieldset>
 </form>
 </body>
