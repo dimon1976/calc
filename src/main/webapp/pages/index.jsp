@@ -11,9 +11,13 @@
     <title>Index</title>
 </head>
 <body>
-<p>Hello ${requestScope.user.name}</p>
-<a href="/register">Registration</a>
-<a href="/authorization">Authorization</a>
-<a href="/logout">Logout</a>
+<p>Hello ${sessionScope.user.name}</p>
+<p>${requestScope.message}</p>
+<p><a href="/register">Registration</a></p>
+<p><a href="/authorization">Authorization</a></p>
+<p><a href="/edit">Edit user</a></p>
+<p><a href="/delete">Delete user</a></p>
+<p><a href="/calc">Calc</a></p>
+<p><a href="/logout">Logout</a></p>
 </body>
 </html>

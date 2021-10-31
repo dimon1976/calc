@@ -1,6 +1,7 @@
 package web.servlet;
 
 import entity.User;
+import service.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,13 +14,18 @@ import java.io.IOException;
 
 @WebServlet(name = "delete", value = "/delete")
 public class DeleteUserServlet extends HttpServlet {
-    RegisterServlet registerServlet = new RegisterServlet();
+    UserService service = new UserService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        getServletContext().getRequestDispatcher("/pages/delete.jsp").forward(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
-//        registerServlet.getMemoryOperation().deleteUser(user);
+        service.deleteUserJdbc(user);
         resp.getWriter().println("User deleted");
         req.getSession().invalidate();
     }
