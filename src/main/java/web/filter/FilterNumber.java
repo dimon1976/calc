@@ -14,18 +14,12 @@ public class FilterNumber extends HttpFilter {
 
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse resp, FilterChain chain) throws IOException, ServletException {
-        if("GET".equals(req.getMethod())){
-            String num1 = req.getParameter("num1");
-            String num2 = req.getParameter("num2");
-            String operation = req.getParameter("operation");
-            extracted(req, resp, chain, num1, num2, operation);
-        }else if("POST".equals(req.getMethod())){
+        if(((HttpServletRequest) req).getMethod().equalsIgnoreCase("POST")){
             String num1 = req.getParameter("num1");
             String num2 = req.getParameter("num2");
             String operation = req.getParameter("operation");
             extracted(req, resp, chain, num1, num2, operation);
         }
-
     }
 
     private void extracted(HttpServletRequest req, HttpServletResponse resp, FilterChain chain, String num1, String num2, String operation) throws IOException, ServletException {
