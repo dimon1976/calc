@@ -1,8 +1,9 @@
 package web.servlet;
 
 import entity.User;
-import service.imp.UserMemoryService;
+import service.UserService;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,22 +13,24 @@ import java.io.IOException;
 
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
+    UserService userService = new UserService();
 
-    private final UserMemoryService memoryOperation = new UserMemoryService();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        getServletContext().getRequestDispatcher("/pages/register.jsp").forward(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("name");
         String username = req.getParameter("username");
         String password = req.getParameter("password");
-        if (!memoryOperation.register(new User(name, username, password))) {
-            resp.getWriter().println("This login exists");
+        if (!userService.registerUserJdbc(new User(name, username, password))) {
+            req.setAttribute("message", "This login exists");
         } else {
-            resp.getWriter().println("Are you registered. Please log in.");
+            req.setAttribute("message", "Are you registered. Please log in.");
         }
-    }
-
-    public UserMemoryService getMemoryOperation() {
-        return memoryOperation;
+        resp.sendRedirect("/authorization");
     }
 }

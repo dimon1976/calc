@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-@WebFilter(servletNames = {"edit"})
+@WebFilter(/*servletNames = {"edit"}*/)
 public class FilterAttributeUser extends HttpFilter {
 
     @Override

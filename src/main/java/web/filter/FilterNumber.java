@@ -9,15 +9,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebFilter(servletNames = {"CalcServlet"})
+@WebFilter(/*servletNames = {"calc"}*/)
 public class FilterNumber extends HttpFilter {
 
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse resp, FilterChain chain) throws IOException, ServletException {
-        String num1 = req.getParameter("num1");
-        String num2 = req.getParameter("num2");
-        String operation = req.getParameter("operation");
-        extracted(req, resp, chain, num1, num2, operation);
+        if(((HttpServletRequest) req).getMethod().equalsIgnoreCase("POST")){
+            String num1 = req.getParameter("num1");
+            String num2 = req.getParameter("num2");
+            String operation = req.getParameter("operation");
+            extracted(req, resp, chain, num1, num2, operation);
+        }
     }
 
     private void extracted(HttpServletRequest req, HttpServletResponse resp, FilterChain chain, String num1, String num2, String operation) throws IOException, ServletException {
