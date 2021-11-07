@@ -18,12 +18,13 @@ public class UserService {
 //        return false;
 //    }
 
-    public boolean registerUserJdbc(User user) {
-        if (!jdbcStorage.verificationLogin(user.getLogin())) {
-            jdbcStorage.save(user);
-            return true;
+    public boolean registerUserJdbc(User user) { //Переделать на понятную проверку !!!
+        boolean existLogin = jdbcStorage.verificationLogin(user.getLogin());
+        if (existLogin) {
+            return false;
         }
-        return false;
+        jdbcStorage.save(user);
+        return true;
     }
 
 //    public boolean verificationUserLogin(User user) {

@@ -5,7 +5,7 @@ import java.util.Date;
 public class History {
     private Double num1;
     private Double num2;
-    private Double result;
+    private double result;
     private String operation;
     private Date dt;
 

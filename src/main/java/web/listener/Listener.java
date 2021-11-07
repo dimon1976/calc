@@ -14,14 +14,11 @@ public class Listener implements HttpSessionListener,
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-//        System.out.println("Context init");
-//        sce.getServletContext().setAttribute("mzd", "sdsad");
         try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override

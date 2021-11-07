@@ -5,7 +5,7 @@
   Time: 0:12
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
@@ -21,6 +21,7 @@
         </label>
         <label>
             <select name="operation">
+                <option disabled selected>Select operation</option>
                 <option value="sum">+</option>
                 <option value="subtrack">-</option>
                 <option value="multiply">*</option>
@@ -36,7 +37,7 @@
     <fieldset>
         <legend>История операций</legend>
         <c:forEach var="results" items="${requestScope.results}">
-            <p>${results.num1} ${results.operation} ${results.num2} = ${results.result}</p>
+            <ul><li><p>${results.num1} ${results.operation} ${results.num2} = ${results.result}</p></li></ul>
         </c:forEach>
     </fieldset>
 </form>

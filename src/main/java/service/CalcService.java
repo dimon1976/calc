@@ -2,38 +2,39 @@ package service;
 
 import entity.History;
 import entity.User;
-import storage.JdbcHistoryCalculate;
+import storage.JdbcHistoryStorage;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
+
+import static service.MathService.*;
 
 public class CalcService {
-    JdbcHistoryCalculate history = new JdbcHistoryCalculate();
+    JdbcHistoryStorage history = new JdbcHistoryStorage();
 
     public Double start(Double num1, Double num2, String op, User user) {
-        MathService mathematics = new MathService();
         switch (op) {
             case "sum":
-                double sum = mathematics.sum(num1, num2);
+                double sum = sum(num1, num2);
                 history.save(num1, num2, sum, user, "+");
                 return sum;
             case "subtrack":
-                double sub = mathematics.sub(num1, num2);
+                double sub = sub(num1, num2);
                 history.save(num1, num2, sub, user, "-");
                 return sub;
             case "div":
-                double div = mathematics.division(num1, num2);
+                double div = division(num1, num2);
                 history.save(num1, num2, div, user, "/");
                 return div;
             case "multiply":
-                double multi = mathematics.multi(num1, num2);
+                double multi = multi(num1, num2);
                 history.save(num1, num2, multi, user, "*");
                 return multi;
         }
         return null;
     }
 
-    public ArrayList<History> select(User user) {
-        return history.history(user);
+    public LinkedList<History> select(User user) {
+        return history.findAllHistory(user);
     }
 
 //    private static void checkingHistorySheet(User user, double multi) {

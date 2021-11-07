@@ -2,31 +2,30 @@ package storage;
 // только хранение
 
 import entity.User;
-import storage.imp.StorageInterface;
+import storage.imp.UserStorage;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 
 
-public class JdbcUserStorage extends ConfigConnection implements StorageInterface {
-//    private final static String dbNameUser = "users";
-//    private final static String dbNameMarksUser = "history_result";
-//    private final static int userId = 1;
-//    private final static int userName = 2;
-//    private final static int userPass = 3;
-//    private final static int name = 4;
+public class JdbcUserStorage extends ConfigConnection implements UserStorage {
+    private final static String addUser = "INSERT INTO `users` (UserName,UserPass,Name) VALUES (?,?,?)";
+    private final static String queryLogin = "SELECT UserName FROM users WHERE BINARY UserName = ?";
+    private final static String queryUser = "SELECT * FROM users WHERE UserName = ?";
+    private final static String queryUserName = "SELECT Name FROM users WHERE UserName = ?";
+    private final static String queryUserId = "DELETE FROM USERS WHERE UserId = ";
+    private final static String updateUser = "UPDATE users SET Name = ?,UserName = ?,UserPass = ? where UserId = ";
+    private final static int value1 = 1;
+    private final static int value2 = 2;
+    private final static int value3 = 3;
 
     @Override
     public boolean save(User user) {
         try {
             try (Connection connection = DriverManager.getConnection(getUrl(), getUsername(), getPassword())) {
-                String addUser = "INSERT INTO `users` (UserName,UserPass,Name) VALUES (?,?,?)";
                 PreparedStatement ps = connection.prepareStatement(addUser);
-                ps.setString(1, user.getLogin());
-                ps.setString(2, user.getPass());
-                ps.setString(3, user.getName());
+                ps.setString(value1, user.getLogin());
+                ps.setString(value2, user.getPass());
+                ps.setString(value3, user.getName());
                 return ps.execute();
             }
         } catch (Exception e) {
@@ -39,17 +38,11 @@ public class JdbcUserStorage extends ConfigConnection implements StorageInterfac
     public boolean verificationLogin(String name) {
         try {
             try (Connection connection = DriverManager.getConnection(getUrl(), getUsername(), getPassword())) {
-                String query = "SELECT UserName FROM users WHERE UserName = ?";
-                PreparedStatement ps = connection.prepareStatement(query);
-                ps.setString(1, name);
+                PreparedStatement ps = connection.prepareStatement(queryLogin);
+                ps.setString(value1, name);
                 ResultSet rs = ps.executeQuery();
-                if (rs.next()) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return rs.next();
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -59,41 +52,24 @@ public class JdbcUserStorage extends ConfigConnection implements StorageInterfac
     public User returnUser(String name) {
         try {
             try (Connection connection = DriverManager.getConnection(getUrl(), getUsername(), getPassword())) {
-                String query = "SELECT * FROM users WHERE UserName = ?";
-                PreparedStatement ps = connection.prepareStatement(query);
-                ps.setString(1, name);
-                ResultSet rs = ps.executeQuery();
-                if (rs.next()) {
-                    int id = rs.getInt("UserId");
-                    String userName2 = rs.getString("UserName");
-                    String userPass = rs.getString("UserPass");
-                    String name1 = rs.getString("Name");
-                    return (new User(id, name1, userName2, userPass));
-                } else {
-                    return null;
-                }
+                PreparedStatement ps = connection.prepareStatement(queryUser);
+                ps.setString(value1, name);
+                return getUser(ps);
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
+
 
     @Override
     public String findByUsername(String name) {
         try {
             try (Connection connection = DriverManager.getConnection(getUrl(), getUsername(), getPassword())) {
-                String query = "select Name from users where UserName = ?";
-                PreparedStatement ps = connection.prepareStatement(query);
-                ps.setString(1, name);
-                ResultSet rs = ps.executeQuery();
-                if (rs.next()) {
-                    System.out.println(rs.getString("Name"));
-                    return rs.getString("Name");
-                } else {
-                    return null;
-                }
+                PreparedStatement ps = connection.prepareStatement(queryUserName);
+                ps.setString(value1, name);
+                return getStringLogin(ps);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -101,12 +77,12 @@ public class JdbcUserStorage extends ConfigConnection implements StorageInterfac
         return null;
     }
 
+
     @Override
     public void delete(User user) {
         try {
             try (Connection connection = DriverManager.getConnection(getUrl(), getUsername(), getPassword())) {
-                String query = "DELETE FROM USERS WHERE UserId = " + user.getId();
-                PreparedStatement preparedStatement = connection.prepareStatement(query);
+                PreparedStatement preparedStatement = connection.prepareStatement(queryUserId + user.getId());
                 preparedStatement.execute();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -120,15 +96,36 @@ public class JdbcUserStorage extends ConfigConnection implements StorageInterfac
     public void edit(User user, String name, String username, String password) {
         try {
             try (Connection connection = DriverManager.getConnection(getUrl(), getUsername(), getPassword())) {
-                String update = "UPDATE users SET Name = ?,UserName = ?,UserPass = ? where UserId = " + user.getId();
-                PreparedStatement preparedStatement = connection.prepareStatement(update);
-                preparedStatement.setString(1, name);
-                preparedStatement.setString(2, username);
-                preparedStatement.setString(3, password);
+                PreparedStatement preparedStatement = connection.prepareStatement(updateUser + user.getId());
+                preparedStatement.setString(value1, name);
+                preparedStatement.setString(value2, username);
+                preparedStatement.setString(value3, password);
                 preparedStatement.execute();
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private User getUser(PreparedStatement ps) throws SQLException {
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            int id = rs.getInt("UserId");
+            String userName2 = rs.getString("UserName");
+            String userPass = rs.getString("UserPass");
+            String name1 = rs.getString("Name");
+            return (new User(id, name1, userName2, userPass));
+        } else {
+            return null;
+        }
+    }
+
+    private String getStringLogin(PreparedStatement ps) throws SQLException {
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            return rs.getString("Name");
+        } else {
+            return null;
         }
     }
 }
