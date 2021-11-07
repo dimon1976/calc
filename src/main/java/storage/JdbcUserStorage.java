@@ -5,18 +5,28 @@ import entity.User;
 import storage.imp.UserStorage;
 
 import java.sql.*;
+import java.util.LinkedList;
 
 
 public class JdbcUserStorage extends ConfigConnection implements UserStorage {
-    private final static String addUser = "INSERT INTO `users` (UserName,UserPass,Name) VALUES (?,?,?)";
+    private final static String addUser = "INSERT INTO users (UserName,UserPass,Name,Admin) VALUES (?,?,?,?)";
     private final static String queryLogin = "SELECT UserName FROM users WHERE BINARY UserName = ?";
     private final static String queryUser = "SELECT * FROM users WHERE UserName = ?";
+    private final static String queryNotNullUser = "SELECT * FROM users";
     private final static String queryUserName = "SELECT Name FROM users WHERE UserName = ?";
     private final static String queryUserId = "DELETE FROM USERS WHERE UserId = ";
-    private final static String updateUser = "UPDATE users SET Name = ?,UserName = ?,UserPass = ? where UserId = ";
+    private final static String updateUser = "UPDATE users SET Name = ?,UserName = ?,UserPass = ? WHERE UserId = ";
+    private final static String updateUserRole = "UPDATE users SET Admin = ? WHERE UserId = ";
+    private final static String findAllUsers = "SELECT * FROM users WHERE UserId != ";
     private final static int value1 = 1;
     private final static int value2 = 2;
     private final static int value3 = 3;
+    private final static int value4 = 4;
+    private final static String id = "UserId";
+    private final static String userName = "UserName";
+    private final static String userPass = "UserPass";
+    private final static String name = "Name";
+    private final static String admin = "Admin";
 
     @Override
     public boolean save(User user) {
@@ -26,6 +36,7 @@ public class JdbcUserStorage extends ConfigConnection implements UserStorage {
                 ps.setString(value1, user.getLogin());
                 ps.setString(value2, user.getPass());
                 ps.setString(value3, user.getName());
+                ps.setInt(value4, 0);
                 return ps.execute();
             }
         } catch (Exception e) {
@@ -79,10 +90,10 @@ public class JdbcUserStorage extends ConfigConnection implements UserStorage {
 
 
     @Override
-    public void delete(User user) {
+    public void delete(int userId) {
         try {
             try (Connection connection = DriverManager.getConnection(getUrl(), getUsername(), getPassword())) {
-                PreparedStatement preparedStatement = connection.prepareStatement(queryUserId + user.getId());
+                PreparedStatement preparedStatement = connection.prepareStatement(queryUserId + userId);
                 preparedStatement.execute();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -107,6 +118,18 @@ public class JdbcUserStorage extends ConfigConnection implements UserStorage {
         }
     }
 
+    public void editRole(int userid, int admin) {
+        try {
+            try (Connection connection = DriverManager.getConnection(getUrl(), getUsername(), getPassword())) {
+                PreparedStatement preparedStatement = connection.prepareStatement(updateUserRole + userid);
+                preparedStatement.setInt(value1, admin);
+                preparedStatement.execute();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private User getUser(PreparedStatement ps) throws SQLException {
         ResultSet rs = ps.executeQuery();
         if (rs.next()) {
@@ -114,7 +137,8 @@ public class JdbcUserStorage extends ConfigConnection implements UserStorage {
             String userName2 = rs.getString("UserName");
             String userPass = rs.getString("UserPass");
             String name1 = rs.getString("Name");
-            return (new User(id, name1, userName2, userPass));
+            int admin = rs.getInt("Admin");
+            return (new User(id, name1, userName2, userPass, admin));
         } else {
             return null;
         }
@@ -127,6 +151,42 @@ public class JdbcUserStorage extends ConfigConnection implements UserStorage {
         } else {
             return null;
         }
+    }
+
+    public boolean queryIsFirstUser() {
+        try {
+            try (Connection connection = DriverManager.getConnection(getUrl(), getUsername(), getPassword())) {
+                PreparedStatement ps = connection.prepareStatement(queryNotNullUser);
+                ResultSet rs = ps.executeQuery();
+                return rs.next();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public LinkedList<User> findAllUser(User user) {
+        try {
+            try (Connection connection = DriverManager.getConnection(getUrl(), getUsername(), getPassword())) {
+                LinkedList<User> list = new LinkedList<>();
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery(findAllUsers + user.getId());
+                while (resultSet.next()) {
+                    int usId = resultSet.getInt(id);
+                    String usLogin = resultSet.getString(userName);
+                    String usPass = resultSet.getString(userPass);
+                    String nm = resultSet.getString(name);
+                    int adm = resultSet.getInt(admin);
+                    User User = new User(usId,nm,usLogin,usPass,adm);
+                    list.addFirst(User); //add first position on list
+                }
+                return list;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
 

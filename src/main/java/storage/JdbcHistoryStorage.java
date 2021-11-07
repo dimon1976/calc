@@ -9,8 +9,9 @@ import java.time.Instant;
 
 
 public class JdbcHistoryStorage extends ConfigConnection {
-    Instant dt = Instant.now();
-    private static final String query = "INSERT INTO history_result (UId,num1,num2,result,dt,op) VALUES (?,?,?,?,?,?)";
+    //    Instant dt = Instant.now();
+//    long dt = System.currentTimeMillis();
+    private static final String query = "INSERT INTO history_result (UId,num1,num2,result,op) VALUES (?,?,?,?,?)";
     private static final int value1 = 1;
     private static final int value2 = 2;
     private static final int value3 = 3;
@@ -33,8 +34,8 @@ public class JdbcHistoryStorage extends ConfigConnection {
                 ps.setDouble(value2, num1);
                 ps.setDouble(value3, num2);
                 ps.setDouble(value4, result);
-//                ps.setDate(value5, );
-                ps.setString(value6, operation);
+//                ps.setLong(value5, dt);
+                ps.setString(value5, operation);
                 ps.execute();
             }
         } catch (Exception e) {
