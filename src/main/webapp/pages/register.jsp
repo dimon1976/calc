@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: dima2
@@ -11,7 +12,7 @@
     <title>Registration</title>
 </head>
 <body>
-<form action="/register" method="post">
+<form action="<c:url value="/register"/>" method="post">
     <input type="text" name="name" placeholder="Name">
     <input type="text" name="username" placeholder="Username">
     <input type="password" name="password" placeholder="Password">

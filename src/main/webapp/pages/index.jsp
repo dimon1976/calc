@@ -15,10 +15,19 @@
 <p>Hello ${sessionScope.user.name}</p>
 <p>${requestScope.message}</p>
 <c:if test="${sessionScope.user!=null}">
+    <c:if test="${sessionScope.user.admin==0}">
     <p><a href="/edit">Edit user</a></p>
     <p><a href="/delete">Delete user</a></p>
     <p><a href="/calc">Calc</a></p>
     <p><a href="/logout">Logout</a></p>
+    </c:if>
+    <c:if test="${sessionScope.user.admin==1}">
+        <p><a href="/edit">Edit user</a></p>
+        <p><a href="/delete">Delete user</a></p>
+        <p><a href="/calc">Calc</a></p>
+        <p><a href="/adminmenu">Administrator menu</a></p>
+        <p><a href="/logout">Logout</a></p>
+    </c:if>
 </c:if>
 
 <c:if test="${sessionScope.user==null}">

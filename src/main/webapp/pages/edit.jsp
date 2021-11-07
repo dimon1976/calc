@@ -14,7 +14,7 @@
 <p>Hello ${sessionScope.user.name}</p>
 <form action="${pageContext.request.contextPath}/edit" method="post">
     <fieldset>
-        <legend>Редактирование профиля</legend>
+        <legend>Редактирование профиля ${sessionScope.user.name}</legend>
         <input type="text" autofocus name="name" placeholder="${sessionScope.user.name}">
         <input type="text" autofocus name="username" placeholder="${sessionScope.user.login}">
         <input type="text" autofocus name="password">

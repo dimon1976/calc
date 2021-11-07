@@ -19,7 +19,8 @@ public class FilterUser extends HttpFilter {
         if (req.getSession().getAttribute("user") != null) {
             chain.doFilter(req, res);
         } else {
-            res.sendError(403);
+            res.sendRedirect("/authorization");
+//            res.sendError(403);
         }
     }
 }
