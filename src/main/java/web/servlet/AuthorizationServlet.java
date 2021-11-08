@@ -37,7 +37,7 @@ public class AuthorizationServlet extends HttpServlet {
     private void verificationPassword(HttpServletRequest req, HttpServletResponse resp, String password, User user) throws IOException, ServletException {
         if (user != null) {
             if (user.getPass().equals(password)) {
-                LinkedList<User> users = storageService.findAllUsersJdbc(user);
+                LinkedList<User> users = storageService.findAllUsersJdbc();
                 req.getSession().setAttribute("user", user);
                 req.getSession().setAttribute("users", users);
                 resp.sendRedirect("/");

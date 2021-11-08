@@ -11,6 +11,7 @@
     <title>Delete user</title>
 </head>
 <body>
+<p><a href="/">На главную</a></p>
 <form action="/delete" method="post">
     <button>Подтвердите удаление</button>
 </form>

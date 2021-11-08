@@ -11,6 +11,7 @@
     <title>Authorization</title>
 </head>
 <body>
+<p><a href="/">На главную</a></p>
 <form action="/authorization" method="post">
     <input type="text" name="username" placeholder="Username">
     <input type="password" name="password" placeholder="Password">

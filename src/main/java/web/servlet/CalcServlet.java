@@ -41,7 +41,7 @@ public class CalcServlet extends HttpServlet {
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
         Double result = service.start(Double.parseDouble(num1), Double.parseDouble(num2), operation, user);
-        LinkedList<History> results = service.select(user);
+        LinkedList<History> results = service.select(user.getId());
         req.setAttribute("results",results);
         req.setAttribute("message", result);
         getServletContext().getRequestDispatcher("/pages/calc.jsp").forward(req, resp);

@@ -13,6 +13,7 @@
 </head>
 <body>
 <p>Hello ${sessionScope.user.name}</p>
+<p><a href="/">На главную</a></p>
 <form action="${pageContext.request.contextPath}/calc" method="post">
     <fieldset>
         <legend>Калькулятор</legend>

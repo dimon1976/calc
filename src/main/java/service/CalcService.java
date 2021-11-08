@@ -33,8 +33,8 @@ public class CalcService {
         return null;
     }
 
-    public LinkedList<History> select(User user) {
-        return history.findAllHistory(user);
+    public LinkedList<History> select(int userid) {
+        return history.findAllHistory(userid);
     }
 
 //    private static void checkingHistorySheet(User user, double multi) {

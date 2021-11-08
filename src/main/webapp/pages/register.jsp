@@ -12,6 +12,7 @@
     <title>Registration</title>
 </head>
 <body>
+<p><a href="/">На главную</a></p>
 <form action="<c:url value="/register"/>" method="post">
     <input type="text" name="name" placeholder="Name">
     <input type="text" name="username" placeholder="Username">

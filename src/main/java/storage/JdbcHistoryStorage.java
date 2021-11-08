@@ -43,12 +43,12 @@ public class JdbcHistoryStorage extends ConfigConnection {
         }
     }
 
-    public LinkedList<History> findAllHistory(User user) {
+    public LinkedList<History> findAllHistory(int userId) {
         try {
             try (Connection connection = DriverManager.getConnection(getUrl(), getUsername(), getPassword())) {
                 LinkedList<History> list = new LinkedList<>();
                 Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery("SELECT * FROM history_result WHERE UId = " + user.getId());
+                ResultSet resultSet = statement.executeQuery("SELECT * FROM history_result WHERE UId = " + userId);
                 while (resultSet.next()) {
                     Double number1 = resultSet.getDouble(num1);
                     Double number2 = resultSet.getDouble(num2);

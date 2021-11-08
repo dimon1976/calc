@@ -12,6 +12,7 @@
 </head>
 <body>
 <p>Hello ${sessionScope.user.name}</p>
+<p><a href="/">На главную</a></p>
 <form action="${pageContext.request.contextPath}/edit" method="post">
     <fieldset>
         <legend>Редактирование профиля ${sessionScope.user.name}</legend>

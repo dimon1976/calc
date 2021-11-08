@@ -18,7 +18,7 @@ public class UserService {
 //        }
 //        return false;
 //    }
-    public LinkedList<User> useAdminMenu(String op, String userId, LinkedList listUsers) {
+    public void useAdminMenu(String op, String userId) {
         int id = Integer.parseInt(userId);
         switch (op) {
             case "del":
@@ -26,22 +26,16 @@ public class UserService {
                 break;
             case "adminon":
                 jdbcStorage.editRole(id, 1);
-                Iterator it = listUsers.iterator();
-                while (it.hasNext()){
-                    if()
-                }
                 break;
             case "adminoff":
                 jdbcStorage.editRole(id, 0);
                 break;
             case "history_operation":
-
                 break;
             case "edit":
                 break;
             default:
-                return null;
-            break;
+                break;
         }
     }
 
@@ -132,8 +126,8 @@ public class UserService {
         jdbcStorage.edit(user, name, username, password);
     }
 
-    public LinkedList<User> findAllUsersJdbc(User user) {
-        return jdbcStorage.findAllUser(user);
+    public LinkedList<User> findAllUsersJdbc() {
+        return jdbcStorage.findAllUser();
     }
 
 

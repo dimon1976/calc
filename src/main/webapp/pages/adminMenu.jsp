@@ -15,27 +15,34 @@
 <c:if test="${sessionScope.user.admin==1}">
     <p><a href="/">На главную</a></p>
     <form action="/adminmenu" method="post">
-    <fieldset>
-        <legend>Зарегистрированные пользователи</legend>
-        <label>
-            <select name="operation">
-                <option disabled selected autofocus >Действия</option>
-                <option value="del">Удалить</option>
-                <option value="adminon">Назначить администратором</option>
-                <option value="adminoff">Назначить пользователем</option>
-                <option value="history_operation">История операций</option>
-                <option value="edit">Редактирование пользователя</option>
-            </select>
-        </label>
-        <c:forEach var="users" items="${sessionScope.users}">
+        <fieldset>
+            <legend>Зарегистрированные пользователи</legend>
             <ul>
-                <li><p>ID:${users.id} ${users.name}
-                    <c:if test="${users.admin==1}"> - администратор</c:if>
-                    <c:if test="${users.admin==0}"> - пользователь</c:if> <button type="submit" name="userId" value="${users.id}">Выполнить</button> </p></li>
+                <c:forEach var="users" items="${sessionScope.users}">
+                    <c:if test="${sessionScope.user.id!=users.id}">
+                        <li>
+                            <p>ID:${users.id} ${users.name}
+                                <c:if test="${users.admin==1}"> - администратор</c:if>
+                                <c:if test="${users.admin==0}"> - пользователь</c:if>
+                                <button type="submit" name="operation" value="adminon">Назначить администратором
+                                </button>
+                            </p>
+                        </li>
+                    </c:if>
+                </c:forEach>
             </ul>
-        </c:forEach>
-    </fieldset>
+        </fieldset>
     </form>
 </c:if>
+<%--<label>--%>
+<%--    <input type="text" name="userId" value="${users.id}">--%>
+<%--</label>--%>
+<%--<button type="submit" name="operation" value="del">Удалить</button>--%>
+<%--<button type="submit" name="operation" value="adminon">Назначить администратором</button>--%>
+<%--<button type="submit" name="operation" value="adminoff">Назначить пользователем</button>--%>
+<%--<button type="submit" name="operation" value="history_operation">История операций</button>--%>
+<%--                                <button type="submit" name="userId" value="${users.id}">Выполнить</button>--%>
+
+
 </body>
 </html>

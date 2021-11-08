@@ -17,7 +17,7 @@ public class JdbcUserStorage extends ConfigConnection implements UserStorage {
     private final static String queryUserId = "DELETE FROM USERS WHERE UserId = ";
     private final static String updateUser = "UPDATE users SET Name = ?,UserName = ?,UserPass = ? WHERE UserId = ";
     private final static String updateUserRole = "UPDATE users SET Admin = ? WHERE UserId = ";
-    private final static String findAllUsers = "SELECT * FROM users WHERE UserId != ";
+    private final static String findAllUsers = "SELECT * FROM users";
     private final static int value1 = 1;
     private final static int value2 = 2;
     private final static int value3 = 3;
@@ -166,12 +166,12 @@ public class JdbcUserStorage extends ConfigConnection implements UserStorage {
         return false;
     }
 
-    public LinkedList<User> findAllUser(User user) {
+    public LinkedList<User> findAllUser() {
         try {
             try (Connection connection = DriverManager.getConnection(getUrl(), getUsername(), getPassword())) {
                 LinkedList<User> list = new LinkedList<>();
                 Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery(findAllUsers + user.getId());
+                ResultSet resultSet = statement.executeQuery(findAllUsers);
                 while (resultSet.next()) {
                     int usId = resultSet.getInt(id);
                     String usLogin = resultSet.getString(userName);
