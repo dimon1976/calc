@@ -10,7 +10,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.LinkedList;
 
@@ -33,7 +32,7 @@ public class AdminMenuServlet extends HttpServlet {
         String operation = req.getParameter("operation");
         String userId = req.getParameter("userId");
         service.useAdminMenu(operation, userId);
-        LinkedList<User> users = service.findAllUsersJdbc();
+        LinkedList<User> users = service.findAllUsers();
         LinkedList<History> results = calcService.select(Integer.parseInt(userId));
         int id = Integer.parseInt(userId);
         req.setAttribute("results", results);

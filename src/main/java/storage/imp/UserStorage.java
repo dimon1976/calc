@@ -3,7 +3,7 @@ package storage.imp;
 import entity.User;
 
 public interface UserStorage {
-    boolean save(User user);
+    void save(User user);
     boolean verificationLogin(String userName);
     String findByUsername(String name);
     void delete(int userID);

@@ -25,7 +25,7 @@ public class DeleteUserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
-        service.deleteUserJdbc(user);
+        service.deleteUser(user);
         resp.getWriter().println("User deleted");
         req.getSession().invalidate();
     }

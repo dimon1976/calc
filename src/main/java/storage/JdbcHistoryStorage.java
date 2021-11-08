@@ -5,13 +5,13 @@ import entity.User;
 
 import java.sql.*;
 import java.util.LinkedList;
-import java.time.Instant;
 
 
 public class JdbcHistoryStorage extends ConfigConnection {
     //    Instant dt = Instant.now();
 //    long dt = System.currentTimeMillis();
-    private static final String query = "INSERT INTO history_result (UId,num1,num2,result,op) VALUES (?,?,?,?,?)";
+    private static final String savingToBase = "INSERT INTO history_result (UId,num1,num2,result,op) VALUES (?,?,?,?,?)";
+    private static final String returnOfTransaction = "SELECT * FROM history_result WHERE UId = ";
     private static final int value1 = 1;
     private static final int value2 = 2;
     private static final int value3 = 3;
@@ -29,7 +29,7 @@ public class JdbcHistoryStorage extends ConfigConnection {
     public void save(double num1, double num2, double result, User user, String operation) {
         try {
             try (Connection connection = DriverManager.getConnection(getUrl(), getUsername(), getPassword())) {
-                PreparedStatement ps = connection.prepareStatement(query);
+                PreparedStatement ps = connection.prepareStatement(savingToBase);
                 ps.setInt(value1, user.getId());
                 ps.setDouble(value2, num1);
                 ps.setDouble(value3, num2);
@@ -43,12 +43,12 @@ public class JdbcHistoryStorage extends ConfigConnection {
         }
     }
 
-    public LinkedList<History> findAllHistory(int userId) {
+    public LinkedList<History> returnHistoryOfOperation(int userId) {
         try {
             try (Connection connection = DriverManager.getConnection(getUrl(), getUsername(), getPassword())) {
                 LinkedList<History> list = new LinkedList<>();
                 Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery("SELECT * FROM history_result WHERE UId = " + userId);
+                ResultSet resultSet = statement.executeQuery(returnOfTransaction + userId);
                 while (resultSet.next()) {
                     Double number1 = resultSet.getDouble(num1);
                     Double number2 = resultSet.getDouble(num2);

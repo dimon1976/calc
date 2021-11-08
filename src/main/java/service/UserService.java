@@ -1,23 +1,13 @@
 package service;
 
-import entity.History;
 import entity.User;
 import storage.JdbcUserStorage;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 
 public class UserService {
     JdbcUserStorage jdbcStorage = new JdbcUserStorage();
 
-    //    public boolean register(User user) {
-//        if (verificationUserLogin(user)) {
-//            User newUser = new User(user.getId(), user.getName(), user.getLogin(), user.getPass());
-//            MemoryUserStorage.addUserList(newUser);
-//            return true;
-//        }
-//        return false;
-//    }
     public void useAdminMenu(String op, String userId) {
         int id = Integer.parseInt(userId);
         switch (op) {
@@ -30,16 +20,12 @@ public class UserService {
             case "adminoff":
                 jdbcStorage.editRole(id, 0);
                 break;
-            case "history_operation":
-                break;
-            case "edit":
-                break;
             default:
                 break;
         }
     }
 
-    public boolean registerUserJdbc(User user) {
+    public boolean registerUser(User user) {
         boolean isEmpty = jdbcStorage.queryIsFirstUser();
         if (isEmpty) {
             boolean existLogin = jdbcStorage.verificationLogin(user.getLogin());
@@ -59,6 +45,33 @@ public class UserService {
         jdbcStorage.editRole(user.getId(), 1);
     }
 
+    public User findByUsername(String userName) {
+        if (jdbcStorage.verificationLogin(userName)) {
+            return jdbcStorage.returnUser(userName);
+        }
+        return null;
+    }
+
+    public void deleteUser(User user) {
+        jdbcStorage.delete(user.getId());
+    }
+
+    public void editUser(User user, String name, String username, String password) {
+        jdbcStorage.edit(user, name, username, password);
+    }
+
+    public LinkedList<User> findAllUsers() {
+        return jdbcStorage.findAllUser();
+    }
+
+    //    public boolean register(User user) {
+//        if (verificationUserLogin(user)) {
+//            User newUser = new User(user.getId(), user.getName(), user.getLogin(), user.getPass());
+//            MemoryUserStorage.addUserList(newUser);
+//            return true;
+//        }
+//        return false;
+//    }
 //    public boolean verificationUserLogin(User user) {
 //        if (!MemoryUserStorage.getUserList().isEmpty()) {
 //            for (User us : MemoryUserStorage.getUserList()) {
@@ -80,19 +93,7 @@ public class UserService {
 //        }
 //        return null;
 //    }
-
-    public User findByUsernameJdbc(String userName) {
-        if (jdbcStorage.verificationLogin(userName)) {
-            return jdbcStorage.returnUser(userName);
-        }
-        return null;
-    }
-
-    public boolean checkAdmin(User user) {
-        return user.getAdmin() == 1;
-    }
-
-//    public void deleteUser(User user) {
+    //    public void deleteUser(User user) {
 //        List<User> userList = MemoryUserStorage.getUserList();
 //        if (userList != null && !userList.isEmpty()) {
 //            for (User r : userList) {
@@ -103,12 +104,7 @@ public class UserService {
 //            }
 //        }
 //    }
-
-    public void deleteUserJdbc(User user) {
-        jdbcStorage.delete(user.getId());
-    }
-
-//    public void editUser(User user, String name, String username, String password) {
+    //    public void editUser(User user, String name, String username, String password) {
 //        List<User> userList = MemoryUserStorage.getUserList();
 //        if (userList != null && !userList.isEmpty()) {
 //            for (User r : userList) {
@@ -121,14 +117,4 @@ public class UserService {
 //            }
 //        }
 //    }
-
-    public void editUserJdbc(User user, String name, String username, String password) {
-        jdbcStorage.edit(user, name, username, password);
-    }
-
-    public LinkedList<User> findAllUsersJdbc() {
-        return jdbcStorage.findAllUser();
-    }
-
-
 }

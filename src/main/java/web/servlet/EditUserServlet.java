@@ -28,9 +28,8 @@ UserService service = new UserService();
         String password = req.getParameter("password");
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
-        service.editUserJdbc(user,name, username, password);
+        service.editUser(user,name, username, password);
         req.setAttribute("message", "User updated");
         resp.sendRedirect("/");
-//        getServletContext().getRequestDispatcher("/pages/index.jsp").forward(req, resp);
     }
 }

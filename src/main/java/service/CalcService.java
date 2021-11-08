@@ -34,7 +34,7 @@ public class CalcService {
     }
 
     public LinkedList<History> select(int userid) {
-        return history.findAllHistory(userid);
+        return history.returnHistoryOfOperation(userid);
     }
 
 //    private static void checkingHistorySheet(User user, double multi) {

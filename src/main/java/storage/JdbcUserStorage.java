@@ -29,7 +29,7 @@ public class JdbcUserStorage extends ConfigConnection implements UserStorage {
     private final static String admin = "Admin";
 
     @Override
-    public boolean save(User user) {
+    public void save(User user) {
         try {
             try (Connection connection = DriverManager.getConnection(getUrl(), getUsername(), getPassword())) {
                 PreparedStatement ps = connection.prepareStatement(addUser);
@@ -37,12 +37,11 @@ public class JdbcUserStorage extends ConfigConnection implements UserStorage {
                 ps.setString(value2, user.getPass());
                 ps.setString(value3, user.getName());
                 ps.setInt(value4, 0);
-                return ps.execute();
+                ps.execute();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return false;
     }
 
     @Override
@@ -73,7 +72,6 @@ public class JdbcUserStorage extends ConfigConnection implements UserStorage {
         return null;
     }
 
-
     @Override
     public String findByUsername(String name) {
         try {
@@ -87,7 +85,6 @@ public class JdbcUserStorage extends ConfigConnection implements UserStorage {
         }
         return null;
     }
-
 
     @Override
     public void delete(int userId) {

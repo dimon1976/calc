@@ -26,7 +26,7 @@ public class RegisterServlet extends HttpServlet {
         String name = req.getParameter("name");
         String username = req.getParameter("username");
         String password = req.getParameter("password");
-        if (!userService.registerUserJdbc(new User(name, username, password))) {
+        if (!userService.registerUser(new User(name, username, password))) {
             req.setAttribute("message", "This login exists");
         } else {
             req.setAttribute("message", "Are you registered. Please log in.");

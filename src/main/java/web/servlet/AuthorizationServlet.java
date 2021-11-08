@@ -30,14 +30,14 @@ public class AuthorizationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
-        User user = storageService.findByUsernameJdbc(username);
+        User user = storageService.findByUsername(username);
         verificationPassword(req, resp, password, user);
     }
 
     private void verificationPassword(HttpServletRequest req, HttpServletResponse resp, String password, User user) throws IOException, ServletException {
         if (user != null) {
             if (user.getPass().equals(password)) {
-                LinkedList<User> users = storageService.findAllUsersJdbc();
+                LinkedList<User> users = storageService.findAllUsers();
                 req.getSession().setAttribute("user", user);
                 req.getSession().setAttribute("users", users);
                 resp.sendRedirect("/");
