@@ -10,6 +10,7 @@ import java.util.LinkedList;
 public class JdbcHistoryStorage extends ConfigConnection {
     //    Instant dt = Instant.now();
 //    long dt = System.currentTimeMillis();
+    //setLocalDate
     private static final String savingToBase = "INSERT INTO history_result (UId,num1,num2,result,op) VALUES (?,?,?,?,?)";
     private static final String returnOfTransaction = "SELECT * FROM history_result WHERE UId = ";
     private static final int value1 = 1;
