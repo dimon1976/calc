@@ -23,6 +23,7 @@ public class DeleteUserServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String confirm = req.getParameter("confirm");
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
         service.deleteUser(user);
